@@ -1,0 +1,17 @@
+kind: TimeChaos
+apiVersion: chaos-mesh.org/v1alpha1
+metadata:
+  namespace: default
+  name: time-serial1
+spec:
+  selector:
+    namespaces:
+      - monitoring
+    pods:
+      monitoring:
+        - prometheus-prometheus-node-exporter-qr62q
+  mode: one
+  timeOffset: '-10m100ns'
+  clockIds:
+    - CLOCK_REALTIME
+  duration: 60s

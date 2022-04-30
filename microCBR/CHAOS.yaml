@@ -1,0 +1,95 @@
+root_dir: ../chaos_experiments/templates/
+
+Serial:
+  network:
+  - index: 0
+    experiment: network-bandwidth-serial.yaml
+  - index: 1
+    experiment: network-corrupt-serial.yaml
+  - index: 2
+    experiment: network-delay-external-target-serial.yaml
+  - index: 3
+    experiment: network-delay-serial.yaml
+  - index: 4
+    experiment: network-delay-target-serial-to.yaml
+  - index: 5
+    experiment: network-delay-target-serial-from.yaml
+  - index: 6
+    experiment: network-delay-target-serial-both.yaml
+  - index: 7
+    experiment: network-duplicate-serial.yaml
+  - index: 8
+    experiment: network-loss-serial.yaml
+  - index: 9
+    experiment: network-partition-external-target-serial.yaml
+  - index: 10
+    experiment: network-partition-target-serial.yaml
+  - index: 11
+    experiment: network-port-occupy-serial.yaml
+  - index: 12
+    experiment: http-patch-body-serial.yaml
+  - index: 13
+    experiment: http-patch-head-serial.yaml
+  - index: 14
+    experiment: http-abort-serial.yaml
+  - index: 15
+    experiment: dns-error-serial.yaml
+  - index: 16
+    experiment: dns-random-serial.yaml
+
+  pod:
+  - index: 0
+    experiment: pod-kill-serial.yaml
+  - index: 1
+    experiment: pod-failure-serial.yaml
+  - index: 2
+    experiment: container-kill-serial.yaml
+  stress:
+  - index: 0
+    experiment: stress-cpu-serial.yaml
+  - index: 1
+    experiment: stress-memory-serial.yaml
+  time:
+  - index: 0
+    experiment: time-serial.yaml
+  jvm:
+  - index: 0
+    experiment: jvm-gc-serial.yaml
+  - index: 1
+    experiment: jvm-stress-cpu-serial.yaml
+  - index: 2
+    experiment: jvm-stress-memory-heap-serial.yaml
+  - index: 3
+    experiment: jvm-stress-memory-stack-serial.yaml
+  io:
+  - index: 0
+    experiment: io-attr-serial.yaml
+  - index: 1
+    experiment: io-fault-serial.yaml
+  - index: 2
+    experiment: io-latency-serial.yaml
+  - index: 3
+    experiment: io-burn-serial.yaml
+  - index: 4
+    experiment: io-fill-serial.yaml
+  config:
+  - index: 0
+    experiment: config-cpu-limit-serial.yaml
+  - index: 1
+    experiment: config-memory-limit-serial.yaml
+  - index: 2
+    experiment: config-cpu-request-serial.yaml
+  - index: 3
+    experiment: config-memory-request-serial.yaml
+  - index: 4
+    experiment: config-agent-serial.yaml
+  - index: 5
+    experiment: config-mount-serial.yaml
+  - index: 6
+    experiment: config-label-serial.yaml
+  - index: 7
+    experiment: config-annotation-serial.yaml
+  - index: 8
+    experiment: config-image-serial.yaml
+  - index: 9
+    experiment: config-port-serial.yaml

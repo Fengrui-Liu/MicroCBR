@@ -1,0 +1,17 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: HTTPChaos
+metadata:
+  name: http-patch-body-serial
+spec:
+  selector:
+    pods:
+      default:
+        - frontend-7df479b46f-t2qbz
+  mode: one
+  target: Response
+  patch:
+    body:
+      type: JSON
+      value: '{"status":"Failed","reason":"hacked by Chaos Mesh"}'
+  port: 80
+  path: '*'

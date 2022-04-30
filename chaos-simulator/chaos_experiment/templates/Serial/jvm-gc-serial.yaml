@@ -1,0 +1,10 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: JVMChaos
+metadata:
+  name: jvm-gc-serial
+spec:
+  action: gc
+  selector:
+    pods:
+      default:
+        - frontend-7df479b46f-t2qbz

@@ -1,0 +1,42 @@
+config:
+- index: 0
+  query: kubectl get pod $pod -n $namespace -o jsonpath='{.metadata.annotations.kubernetes\.io/ingress-bandwidth}'
+- index: 1
+  query: kubectl get pod $pod -n $namespace -o jsonpath='{.metadata.annotations.kubernetes\.io/egress-bandwidth}'
+- index: 2
+  query: kubectl get pod $pod -n $namespace -o jsonpath='{.spec.containers[].resources}'
+- index: 3
+  query: kubectl get pod $pod -n $namespace -o jsonpath='{.spec.containers[].resources.limits.cpu}'
+- index: 4
+  query: kubectl get pod $pod -n $namespace -o jsonpath='{.spec.containers[].resources.limits.memory}'
+- index: 5
+  query: kubectl get pod $pod -n $namespace -o jsonpath='{.spec.containers[].resources.requests.cpu}'
+- index: 6
+  query: kubectl get pod $pod -n $namespace -o jsonpath='{.spec.containers[].resources.requests.memory}'
+- index: 7
+  query: kubectl get pod $pod -n $namespace -o jsonpath='{.spec.containers[].env}'
+- index: 8
+  query: kubectl get pod $pod -n $namespace -o jsonpath='{.metadata.managedFields[].fieldsV1.f\:volumeMounts}'
+- index: 9
+  query: kubectl get pod $pod -n $namespace -o jsonpath='{.metadata.labels}'
+- index: 10
+  query: kubectl get pod $pod -n $namespace -o jsonpath='{.metadata.annotations}'
+- index: 11
+  query: kubectl get pod $pod -n $namespace -o jsonpath='{.spec.containers[].image}'
+- index: 12
+  query: kubectl get pod $pod -n $namespace -o jsonpath='{.spec.containers[].ports}'
+
+
+exec:
+- index: 0
+  query: kubectl exec -it $pod -n $namespace -- ping -c 5 8.8.8.8 -q | grep "min/avg/max"
+- index: 1
+  query: kubectl exec -it $pod -n $namespace -- ping -c 5 8.8.8.8 -q | grep "loss"
+- index: 3
+  query: kubectl exec -it $pod -n $namespace -- ping -c 5 frontend-external.default.svc.cluster.local -q | grep "min/avg/max"
+- index: 4
+  query: kubectl exec -it $pod -n $namespace -- ping -c 5 frontend-external.default.svc.cluster.local -q | grep "loss"
+- index: 5
+  query: kubectl exec -it $pod -n $namespace -- stat -c '%a' /data/*
+- index: 6
+  query: kubectl exec -it $pod -n $namespace -- lsof -i -P -n | grep "LISTEN"

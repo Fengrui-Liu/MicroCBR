@@ -1,0 +1,18 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: network-bandwidth-serial
+spec:
+  action: bandwidth
+  mode: one
+  selector:
+    pods:
+      default:
+        - frontend-7df479b46f-t2qbz
+  bandwidth:
+    rate: 10kbps
+    limit: 100
+    buffer: 10000
+    peakrate: 1000000
+    minburst: 1000000
+  duration: "120s"

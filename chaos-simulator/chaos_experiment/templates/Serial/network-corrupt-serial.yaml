@@ -1,0 +1,15 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: network-corrupt-serial
+spec:
+  action: corrupt
+  mode: one
+  selector:
+    pods:
+      default:
+        - frontend-7df479b46f-t2qbz
+  corrupt:
+    corrupt: "90"
+    correlation: "25"
+  duration: "120s"

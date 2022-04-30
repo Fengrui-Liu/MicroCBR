@@ -1,0 +1,16 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: HTTPChaos
+metadata:
+  name: http-abort-chaos
+spec:
+  mode: all
+  selector:
+    pods:
+      default:
+        - frontend-7df479b46f-t2qbz
+  target: Request
+  port: 80
+  method: GET
+  path: /api
+  abort: true
+  duration: 120s

@@ -1,0 +1,15 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: network-loss-serial
+spec:
+  action: loss
+  mode: one
+  selector:
+    pods:
+      default:
+        - frontend-7df479b46f-t2qbz
+  loss:
+    loss: "90"
+    correlation: "25"
+  duration: "120s"

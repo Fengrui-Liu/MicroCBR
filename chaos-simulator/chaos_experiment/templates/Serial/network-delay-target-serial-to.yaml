@@ -1,0 +1,24 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: network-delay-target-serial-to
+spec:
+  action: delay
+  mode: one
+  selector:
+    pods:
+      default:
+        - frontend-7df479b46f-t2qbz
+  delay:
+    latency: "3000ms"
+    correlation: "25"
+    jitter: "90ms"
+  direction: to
+  target:
+    selector:
+      namespaces:
+        - default
+      labelSelectors:
+        app: "adservice"
+    mode: one
+  duration: "120s"

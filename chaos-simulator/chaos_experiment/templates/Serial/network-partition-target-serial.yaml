@@ -1,0 +1,20 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: network-partition-target-serial
+spec:
+  action: partition
+  mode: one
+  selector:
+    pods:
+      default:
+        - frontend-7df479b46f-t2qbz
+  direction: to
+  target:
+    selector:
+      namespaces:
+        - default
+      labelSelectors:
+        "target": "frontend"
+    mode: one
+  duration: "120s"

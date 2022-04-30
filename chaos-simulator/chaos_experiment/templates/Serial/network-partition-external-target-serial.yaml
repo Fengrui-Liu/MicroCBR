@@ -1,0 +1,17 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: network-partition-external-target-serial
+spec:
+  action: partition
+  mode: one
+  selector:
+    pods:
+      default:
+        - frontend-7df479b46f-t2qbz
+  direction: both
+  externalTargets:
+    - "8.8.8.8"
+    - "114.114.114.114"
+    - "8.8.0.0/16"
+  duration: "120s"

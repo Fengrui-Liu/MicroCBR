@@ -1,0 +1,15 @@
+pod:
+- index: 0
+  query: kubectl logs $pod -n $namespace | grep "timeout"
+- index: 1
+  query: kubectl get event --field-selector involvedObject.name=$pod | grep "failed"
+- index: 2
+  query: kubectl logs $pod -n $namespace | grep "hacked"
+- index: 3
+  query: kubectl logs $pod -n $namespace | grep "token=none"
+- index: 4
+  query: kubectl logs $pod -n $namespace | grep "408"
+- index: 5
+  query: kubectl logs $pod -n $namespace | grep "IOException"
+- index: 6
+  query: kubectl logs $pod -n $namespace | grep "Port is already in use"

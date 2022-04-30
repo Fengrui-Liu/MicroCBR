@@ -1,0 +1,16 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: IOChaos
+metadata:
+  name: io-fault-serial
+spec:
+  action: fault
+  mode: one
+  selector:
+    pods:
+      default:
+        - redis-cart-76699746c5-8s7mq
+  volumePath: /data
+  path: /data/*
+  errno: 5
+  percent: 50
+  duration: "120s"

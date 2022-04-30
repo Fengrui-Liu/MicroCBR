@@ -1,0 +1,745 @@
+network:
+  - index: 0
+    experiment: network-bandwidth-serial.yaml
+    instance_related: False
+    anomalies:
+      metrics:
+        network:
+        - index: 0
+          action: dips
+        - index: 1
+          action: dips
+        - index: 2
+          action: dips
+        - index: 3
+          action: dips
+        - index: 7
+          action: dips
+        icmp:
+        - index: 1
+          action: dips
+      traces:
+        onehop:
+        - index: 0
+          action: all
+        - index: 1
+          action: all
+      logs:
+        pod:
+        - index: 0
+          action: match
+      cmds:
+        config:
+        - index: 0
+          action: anomaly
+        - index: 1
+          action: anomaly
+
+  - index: 1
+    experiment: network-corrupt-serial.yaml
+    instance_related: False
+    anomalies:
+      metrics:
+        network:
+        - index: 0
+          action: dips
+        - index: 1
+          action: dips
+        - index: 2
+          action: dips
+        - index: 4
+          action: spikes
+        - index: 11
+          action: spikes
+      traces:
+        onehop:
+        - index: 1
+          action: all
+
+  - index: 2
+    experiment: network-delay-external-target-serial.yaml
+    instance_related: False
+    anomalies:
+      cmds:
+        exec:
+        - index: 0
+          action: anomaly
+
+  - index: 3
+    experiment: network-delay-serial.yaml
+    instance_related: False
+    anomalies:
+      metrics:
+        icmp:
+        - index: 1
+          action: spikes
+      traces:
+        onehop:
+        - index: 1
+          action: all
+
+  - index: 4
+    experiment: network-delay-target-serial-to.yaml
+    instance_related: False
+    anomalies:
+      traces:
+        onehop:
+        - index: 0
+          action: one
+
+  - index: 5
+    experiment: network-delay-target-serial-from.yaml
+    instance_related: False
+    anomalies:
+      traces:
+        onehop:
+        - index: 1
+          action: one
+
+  - index: 6
+    experiment: network-delay-target-serial-both.yaml
+    instance_related: False
+    anomalies:
+      traces:
+        onehop:
+        - index: 0
+          action: one
+        - index: 1
+          action: one
+
+
+  - index: 7
+    experiment: network-duplicate-serial.yaml
+    instance_related: False
+    anomalies:
+      metrics:
+          network:
+          - index: 0
+            action: spikes
+          - index: 1
+            action: spikes
+          - index: 2
+            action: spikes
+          - index: 3
+            action: spikes
+
+
+  - index: 8
+    experiment: network-loss-serial.yaml
+    instance_related: False
+    anomalies:
+      metrics:
+        network:
+        - index: 0
+          action: dips
+        - index: 1
+          action: dips
+        - index: 2
+          action: dips
+        - index: 3
+          action: dips
+        icmp:
+          - index: 4
+            action: spikes
+      traces:
+        onehop:
+        - index: 1
+          action: one
+      cmds:
+        exec:
+        - index: 1
+          action: anomaly
+
+  - index: 9
+    experiment: network-partition-external-target-serial.yaml
+    instance_related: False
+    anomalies:
+      metrics:
+        network:
+        - index: 0
+          action: dips
+        - index: 1
+          action: dips
+        - index: 2
+          action: dips
+        - index: 3
+          action: dips
+        icmp:
+        - index: 1
+          action: dips
+      traces:
+        onehop:
+        - index: 0
+          action: one
+        - index: 1
+          action: one
+      cmds:
+        exec:
+        - index: 1
+          action: anomaly
+
+  - index: 10
+    experiment: network-partition-target-serial.yaml
+    instance_related: False
+    anomalies:
+      metrics:
+        network:
+        - index: 0
+          action: dips
+        - index: 1
+          action: dips
+        - index: 2
+          action: dips
+        - index: 3
+          action: dips
+        icmp:
+        - index: 1
+          action: dips
+      traces:
+        onehop:
+        - index: 0
+          action: one
+        - index: 1
+          action: one
+      cmds:
+        exec:
+        - index: 4
+          action: anomaly
+
+  - index: 11
+    experiment: network-port-occupy-serial.yaml
+    instance_related: False
+    anomalies:
+      cmds:
+        exec:
+        - index: 6
+          action: anomaly
+      logs:
+        pod:
+        - index: 6
+          action: match
+
+
+pod:
+  - index: 0
+    experiment: pod-kill-serial.yaml
+    instance_related: False
+    order: True
+    anomalies:
+      metrics:
+        network:
+        - index: 0
+          action: dips
+          order: 0
+        - index: 1
+          action: dips
+          order: 0
+        - index: 2
+          action: dips
+          order: 0
+        - index: 3
+          action: dips
+          order: 0
+
+        memory:
+        - index: 0
+          action: spikes
+          order: 2
+        - index: 1
+          action: spikes
+          order: 2
+        - index: 2
+          action: spikes
+          order: 2
+        - index: 3
+          action: spikes
+          order: 2
+        - index: 5
+          action: spikes
+          order: 2
+        - index: 6
+          action: spikes
+          order: 2
+        - index: 7
+          action: spikes
+          order: 2
+        - index: 8
+          action: spikes
+          order: 2
+        container:
+        - index: 0
+          action: spikes
+          order: 1
+        cpu:
+        - index: 0
+          action: spikes
+          order: 2
+        - index: 1
+          action: spikes
+          order: 2
+        - index: 2
+          action: spikes
+          order: 2
+      cmds:
+        config:
+        - index: 2
+          action: anomaly
+
+  - index: 1
+    experiment: pod-failure-serial.yaml
+    instance_related: False
+    anomalies:
+      metrics:
+        network:
+        - index: 0
+          action: dips
+        - index: 1
+          action: dips
+        - index: 2
+          action: dips
+        - index: 3
+          action: dips
+        memory:
+        - index: 0
+          action: dips
+        - index: 1
+          action: dips
+        - index: 3
+          action: dips
+        - index: 4
+          action: dips
+        cpu:
+        - index: 0
+          action: dips
+        - index: 1
+          action: dips
+        - index: 3
+          action: dips
+        - index: 4
+          action: dips
+      logs:
+        pod:
+        - index: 1
+          action: match
+
+
+  - index: 2
+    experiment: container-kill-serial.yaml
+    instance_related: False
+    anomalies:
+      metrics:
+        container:
+        - index: 0
+          action: spikes
+        - index: 1
+          action: spikes
+        - index: 2
+          action: dips
+
+stress:
+  - index: 0
+    experiment: stress-cpu-serial
+    instance_related: False
+    anomalies:
+      metrics:
+        cpu:
+        - index: 0
+          action: spikes
+        - index: 1
+          action: spikes
+        - index: 2
+          action: spikes
+        memory:
+        - index: 0
+          action: spikes
+        - index: 1
+          action: spikes
+        - index: 2
+          action: spikes
+        - index: 3
+          action: dips
+      traces:
+        onehop:
+        - index: 0
+          action: all
+        - index: 1
+          action: all
+
+
+  - index: 1
+    experiment: stress-memory-serial
+    instance_related: False
+    anomalies:
+      metrics:
+        cpu:
+        - index: 0
+          action: spikes
+        - index: 1
+          action: spikes
+        - index: 2
+          action: spikes
+        memory:
+        - index: 0
+          action: spikes
+        - index: 1
+          action: spikes
+        - index: 2
+          action: spikes
+        - index: 3
+          action: dips
+        - index: 5
+          action: spikes
+        - index: 6
+          action: spikes
+        - index: 7
+          action: spikes
+        - index: 8
+          action: spikes
+      traces:
+        onehop:
+        - index: 0
+          action: all
+        - index: 1
+          action: all
+
+
+# time:
+#   - index: 0
+#     experiment: time-serial.yaml
+#     instance_related: True
+#     anomalies:
+#       metrics:
+#         time:
+#         - index: 0
+#           action: spikes
+
+
+jvm:
+  - index: 0
+    experiment: jvm-gc-serial.yaml
+    instance_related: True
+    anomalies:
+      metrics:
+        jvm:
+        - index: 0
+          action: spikes
+        - index: 1
+          action: spikes
+        - index: 2
+          action: spikes
+        - index: 3
+          action: spikes
+        - index: 7
+          action: spikes
+  - index: 2
+    experiment: jvm-stress-memory-heap-serial.yaml
+    instance_related: True
+    anomalies:
+      metrics:
+        memory:
+        - index: 0
+          action: spikes
+        - index: 1
+          action: spikes
+        - index: 2
+          action: spikes
+        - index: 3
+          action: dips
+        cpu:
+        - index: 0
+          action: spikes
+        - index: 1
+          action: spikes
+        - index: 2
+          action: spikes
+        jvm:
+        - index: 0
+          action: spikes
+        - index: 1
+          action: spikes
+        - index: 5
+          action: spikes
+      traces:
+        onehop:
+        - index: 0
+          action: all
+        - index: 1
+          action: all
+
+  - index: 3
+    experiment: jvm-stress-memory-stack-serial.yaml
+    instance_related: True
+    anomalies:
+      metrics:
+        memory:
+        - index: 0
+          action: spikes
+        - index: 1
+          action: spikes
+        - index: 2
+          action: spikes
+        - index: 3
+          action: dips
+        - index: 5
+          action: spikes
+        cpu:
+        - index: 0
+          action: spikes
+        - index: 1
+          action: spikes
+        - index: 2
+          action: spikes
+        jvm:
+        - index: 0
+          action: spikes
+        - index: 1
+          action: spikes
+        - index: 6
+          action: spikes
+      traces:
+        onehop:
+        - index: 0
+          action: all
+        - index: 1
+          action: all
+
+
+io:
+  - index: 0
+    experiment: io-attr-serial.yaml
+    instance_related: False
+    order: True
+    anomalies:
+      metrics:
+        io:
+        - index: 0
+          action: dips
+          order: 0
+        - index: 1
+          action: dips
+          order: 0
+        - index: 2
+          action: dips
+          order: 0
+        cpu:
+        - index: 0
+          action: dips
+          order: 1
+        - index: 1
+          action: dips
+          order: 1
+        - index: 2
+          action: dips
+          order: 1
+        memory:
+        - index: 0
+          action: dips
+          order: 2
+        - index: 1
+          action: dips
+          order: 2
+      cmds:
+        exec:
+        - index: 4
+          action: anomaly
+  - index: 1
+    experiment: io-fault-serial.yaml
+    instance_related: False
+    anomalies:
+      logs:
+        pod:
+        - index: 5
+          action: match
+  - index: 2
+    experiment: io-latency-serial.yaml
+    instance_related: False
+    anomalies:
+      metrics:
+        io:
+        - index: 0
+          action: dips
+        - index: 1
+          action: dips
+        - index: 2
+          action: dips
+        - index: 5
+          action: dips
+        - index: 6
+          action: dips
+  - index: 3
+    experiment: io-burn-serial.yaml
+    instance_related: False
+    anomalies:
+      metrics:
+        io:
+        - index: 0
+          action: spikes
+        - index: 1
+          action: spikes
+        - index: 2
+          action: spikes
+        - index: 5
+          action: spikes
+        - index: 6
+          action: spikes
+  - index: 4
+    experiment: io-fill-serial.yaml
+    instance_related: False
+    anomalies:
+      metrics:
+        io:
+        - index: 0
+          action: spikes
+        - index: 1
+          action: spikes
+        - index: 3
+          action: spikes
+        - index: 6
+          action: spikes
+
+
+# dns:
+#   - index: 0
+#     experiment: dns-error-serial.yaml
+#     instance_related: True
+#     anomalies:
+#       metrics:
+#         network:
+#         - index: 0
+#           action: dips
+#         - index: 1
+#           action: dips
+#         - index: 2
+#           action: dips
+#         icmp:
+#         - index: 2
+#           action: spikes
+#         - index: 3
+#           action: spikes
+#   - index: 1
+#     experiment: dns-random-serial.yaml
+#     instance_related: True
+#     anomalies:
+#       metrics:
+#         icmp:
+#         - index: 1
+#           action: dips
+#         - index: 2
+#           action: spikes
+#         - index: 3
+#           action: spikes
+http:
+  - index: 0
+    experiment: http-patch-body-serial.yaml
+    instance_related: True
+    anomalies:
+      logs:
+        pod:
+        - index: 2
+          action: match
+  - index: 1
+    experiment: http-patch-head-serial.yaml
+    instance_related: True
+    anomalies:
+      logs:
+        pod:
+        - index: 3
+          action: match
+  - index: 2
+    experiment: http-abort-serial.yaml
+    instance_related: True
+    anomalies:
+      logs:
+        pod:
+        - index: 4
+          action: match
+
+config:
+  - index: 0
+    experiment: config-cpu-limit-serial.yaml
+    instance_related: True
+    anomalies:
+      cmds:
+        config:
+        - index: 3
+          action: anomaly
+        - index: 5
+          action: anomaly
+  - index: 1
+    experiment: config-memory-limit-serial.yaml
+    instance_related: True
+    anomalies:
+      cmds:
+        config:
+        - index: 4
+          action: anomaly
+        - index: 6
+          action: anomaly
+  - index: 2
+    experiment: config-cpu-request-serial.yaml
+    instance_related: True
+    anomalies:
+      cmds:
+        config:
+        - index: 3
+          action: anomaly
+        - index: 5
+          action: anomaly
+  - index: 3
+    experiment: config-memory-request-serial.yaml
+    instance_related: True
+    anomalies:
+      cmds:
+        config:
+        - index: 4
+          action: anomaly
+        - index: 6
+          action: anomaly
+  - index: 4
+    experiment: config-agent-serial.yaml
+    instance_related: True
+    anomalies:
+      cmds:
+        config:
+        - index: 7
+          action: anomaly
+  - index: 5
+    experiment: config-mount-serial.yaml
+    instance_related: True
+    anomalies:
+      cmds:
+        config:
+        - index: 8
+          action: anomaly
+  - index: 6
+    experiment: config-label-serial.yaml
+    instance_related: True
+    anomalies:
+      cmds:
+        config:
+        - index: 9
+          action: anomaly
+  - index: 7
+    experiment: config-annotation-serial.yaml
+    instance_related: True
+    anomalies:
+      cmds:
+        config:
+        - index: 10
+          action: anomaly
+  - index: 8
+    experiment: config-image-serial.yaml
+    instance_related: True
+    anomalies:
+      cmds:
+        config:
+        - index: 11
+          action: anomaly
+  - index: 9
+    experiment: config-port-serial.yaml
+    instance_related: True
+    anomalies:
+      cmds:
+        config:
+        - index: 12
+          action: anomaly

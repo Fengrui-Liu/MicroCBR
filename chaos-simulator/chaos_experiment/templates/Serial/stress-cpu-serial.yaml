@@ -1,0 +1,19 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: StressChaos
+metadata:
+  name: stress-cpu-serial
+spec:
+  mode: one
+  selector:
+    pods:
+      default:
+        - frontend-7df479b46f-t2qbz
+  stressors:
+    cpu:
+      workers: 4
+      load: 80
+      options:
+        - "--cpu 2"
+        - "--timeout 600"
+        - "--hdd 1"
+  duration: "120s"

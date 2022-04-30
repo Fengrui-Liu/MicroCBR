@@ -1,0 +1,12 @@
+anomalies:
+  metrics:
+    network:
+    - action: dips
+      index: 0
+    - action: dips
+      index: 1
+    - action: dips
+      index: 2
+    - action: dips
+      index: 3
+groundtruth: network-bandwidth-serial.yaml

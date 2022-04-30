@@ -1,0 +1,12 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: PodChaos
+metadata:
+  name: pod-failure-serial
+spec:
+  action: pod-failure
+  mode: one
+  duration: "120s"
+  selector:
+    pods:
+      default:
+        - frontend-7df479b46f-t2qbz

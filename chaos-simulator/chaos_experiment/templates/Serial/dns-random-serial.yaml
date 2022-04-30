@@ -1,0 +1,15 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: DNSChaos
+metadata:
+  name: dns-random-serial
+spec:
+  action: random
+  mode: all
+  patterns:
+    - frontend.default.svc.cluster.local
+    - frontend-external.default.svc.cluster.local
+  selector:
+    pods:
+      default:
+        - frontend-7df479b46f-t2qbz
+  duration: "120s"

@@ -1,0 +1,17 @@
+order: True
+anomalies:
+  metrics:
+    network:
+    - action: dips
+      index: 0
+      order: 0
+    - action: dips
+      index: 1
+      order: 1
+    - action: dips
+      index: 2
+      order: 2
+    - action: dips
+      index: 3
+      order: 2
+groundtruth: network-bandwidth-serial.yaml

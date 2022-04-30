@@ -1,0 +1,11 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: JVMChaos
+metadata:
+  name: jvm-stress-cpu-serial
+spec:
+  action: stress
+  cpuCount: 4
+  selector:
+    pods:
+      default:
+        - frontend-7df479b46f-t2qbz

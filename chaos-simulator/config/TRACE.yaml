@@ -1,0 +1,5 @@
+onehop:
+- index: 0
+  query: caller delay
+- index: 1
+  query: callee delay

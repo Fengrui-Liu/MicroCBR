@@ -1,0 +1,204 @@
+
+network:
+- index: 0
+  query: avg(irate(container_network_receive_bytes_total{namespace=~"$namespace", pod=~"$pod"}[5m]))
+- index: 1
+  query: avg(irate(container_network_transmit_bytes_total{namespace=~"$namespace", pod=~"$pod"}[5m]))
+- index: 2
+  query: avg(irate(container_network_receive_packets_total{namespace=~"$namespace", pod=~"$pod"}[5m]))
+- index: 3
+  query: avg(irate(container_network_transmit_packets_total{namespace=~"$namespace", pod=~"$pod"}[5m]))
+- index: 4
+  query: avg(irate(container_network_receive_packets_dropped_total{namespace=~"$namespace", pod=~"$pod"}[5m]))
+- index: 5
+  query: avg(irate(container_network_transmit_packets_dropped_total{namespace=~"$namespace", pod=~"$pod"}[5m]))
+- index: 6
+  query: sum(irate(istio_requests_total{reporter=~"(destination)",pod=~"$pod"}[5m]))
+- index: 7
+  query: sum(irate(istio_requests_total{reporter=~"(source)",pod=~"$pod"}[5m]))
+- index: 8
+  query: histogram_quantile(0.90, sum(irate(istio_request_duration_milliseconds_bucket{reporter=~"destination",pod=~"$pod"}[1m])) by (le)) / 1000
+- index: 9
+  query: histogram_quantile(0.90, sum(irate(istio_request_duration_milliseconds_bucket{reporter=~"source",pod=~"$pod"}[1m])) by (le)) / 1000
+- index: 10
+  query: sum(irate(istio_requests_total{reporter=~"(destination)",pod=~"$pod",response_code='0'}[5m]))
+- index: 11
+  query: irate(node_netstat_Tcp_RetransSegs[5m])
+
+
+
+cpu:
+- index: 0
+  query: avg(irate(container_cpu_usage_seconds_total{namespace=~"$namespace", pod=~"$pod"}[5m]) * 100)
+- index: 1
+  query: sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate{namespace=~"$namespace", pod=~"$pod"})  / sum(cluster:namespace:pod_cpu:active:kube_pod_container_resource_requests{namespace=~"$namespace"})
+- index: 2
+  query: sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate{namespace=~"$namespace", pod=~"$pod"}) / sum(cluster:namespace:pod_cpu:active:kube_pod_container_resource_limits{namespace=~"$namespace"})
+
+memory:
+- index: 0
+  query: avg(irate(container_memory_usage_bytes{namespace=~"$namespace", pod=~"$pod"}[5m]))
+- index: 1
+  query: avg(irate(container_memory_working_set_bytes{namespace=~"$namespace", pod=~"$pod"}[5m]))
+- index: 2
+  query: avg(irate(container_memory_rss{namespace=~"$namespace", pod=~"$pod"}[5m]))
+- index: 3
+  query: avg(irate(container_memory_cache{namespace=~"$namespace", pod=~"$pod"}[5m]))
+- index: 4
+  query: avg(irate(container_memory_swap{namespace=~"$namespace", pod=~"$pod"}[5m]))
+- index: 5
+  query: sum(container_memory_working_set_bytes{namespace=~"$namespace", pod=~"$pod"}) / sum(cluster:namespace:pod_memory:active:kube_pod_container_resource_requests{namespace=~"$namespace"})
+- index: 6
+  query: sum(container_memory_working_set_bytes{namespace=~"$namespace", pod=~"$pod"}) / sum(cluster:namespace:pod_memory:active:kube_pod_container_resource_limits{namespace=~"$namespace"})
+- index: 7
+  query: sum (container_memory_working_set_bytes{namespace=~"$namespace", pod=~"$pod"}) / sum(container_spec_memory_limit_bytes{namespace=~"$namespace"}) * 100
+- index: 8
+  query: sum (container_memory_rss{namespace=~"$namespace", pod=~"$pod"}) / sum(container_spec_memory_limit_bytes{namespace=~"$namespace",pod=~"$pod"})  * 100
+io:
+- index: 0
+  query: sum (irate(container_fs_reads_total{namespace=~"$namespace", pod=~"$pod"}[5m]) + irate(container_fs_writes_total{namespace=~"$namespace", pod=~"$pod"}[5m]))
+- index: 1
+  query: sum(irate(container_fs_writes_total{namespace=~"$namespace", pod=~"$pod"}[5m]))
+- index: 2
+  query: sum (irate(container_fs_reads_total{namespace=~"$namespace", pod=~"$pod"}[5m]))
+- index: 3
+  query: sum(container_fs_usage_bytes{namespace=~"$namespace", pod=~"$pod"})
+- index: 4
+  query: sum (irate(container_fs_io_current{namespace=~"$namespace", pod=~"$pod"}[5m]))
+- index: 5
+  query: sum (irate(container_fs_reads_merged_total{namespace=~"$namespace", pod=~"$pod"}[5m]))
+- index: 6
+  query: sum (irate(container_fs_writes_merged_total{namespace=~"$namespace", pod=~"$pod"}[5m]))
+
+container:
+- index: 0
+  query: avg(irate(kube_pod_container_status_restarts_total{namespace=~"$namespace", pod=~"$pod"}[5m]))
+- index: 1
+  query: avg(irate(kube_pod_container_status_terminated{namespace=~"$namespace", pod=~"$pod"}[5m]))
+- index: 2
+  query: avg(irate(kube_pod_container_status_ready{namespace=~"$namespace", pod=~"$pod"}[5m]))
+
+mongo:
+- index: 0
+  query: mongodb_connections{instance="$host", state="current"}
+- index: 1
+  query: irate(mongodb_mongod_metrics_ttl_deleted_documents_total{instance="$host"}[5m])
+- index: 2
+  query: irate(mongodb_op_counters_repl_total{instance="$host"}[5m])
+- index: 3
+  query: irate(mongodb_op_counters_total{instance="$host"}[5m])
+- index: 4
+  query: mongodb_mongod_metrics_cursor_open{instance="$host"}
+- index: 5
+  query: irate(mongodb_mongod_metrics_document_total{instance="$host"}[5m])
+- index: 6
+  query: irate(mongodb_mongod_global_lock_current_queue{instance="$host"}[5m])
+- index: 7
+  query: sum(increase(mongodb_mongod_metrics_query_executor_total{instance="$host", state="scanned_objects"}[5m]))/sum(increase(mongodb_mongod_metrics_document_total{instance="$host", state="returned"}[5m]))
+- index: 8
+  query: irate(mongodb_mongod_metrics_query_executor_total{instance="$host"}[5m])
+- index: 9
+  query: irate(mongodb_mongod_metrics_record_moves_total{instance="$host"}[5m])
+- index: 10
+  query: irate(mongodb_asserts_total{instance="$host"}[5m])
+- index: 11
+  query: irate(mongodb_extra_info_page_faults_total{instance="$host"}[5m])
+
+mysql:
+- index: 0
+  query: irate(mysql_global_status_queries{instance="$host"}[5m])
+- index: 1
+  query: max(max_over_time(mysql_global_status_threads_connected{instance="$host"}[5m])
+- index: 2
+  query: mysql_global_status_max_used_connections{instance="$host"}
+- index: 3
+  query: mysql_global_variables_max_connections{instance="$host"}
+- index: 4
+  query: max_over_time(mysql_global_status_threads_running{instance="$host"}[5m])
+- index: 5
+  query: irate(mysql_global_status_questions{instance="$host"}[5m])
+- index: 6
+  query: irate(mysql_global_status_created_tmp_tables{instance="$host"}[5m])
+- index: 7
+  query: irate(mysql_global_status_created_tmp_disk_tables{instance="$host"}[5m])
+- index: 8
+  query: irate(mysql_global_status_created_tmp_files{instance="$host"}[5m])
+- index: 9
+  query: irate(mysql_global_status_select_full_join{instance="$host"}[5m])
+- index: 10
+  query: irate(mysql_global_status_select_full_range_join{instance="$host"}[5m])
+- index: 11
+  query: irate(mysql_global_status_select_range{instance="$host"}[5m])
+- index: 12
+  query: irate(mysql_global_status_sort_rows{instance="$host"}[5m])
+- index: 13
+  query: irate(mysql_global_status_sort_range{instance="$host"}[5m])
+- index: 14
+  query: irate(mysql_global_status_sort_merge_passes{instance="$host"}[5m])
+- index: 15
+  query: irate(mysql_global_status_sort_scan{instance="$host"}[5m])
+- index: 16
+  query: irate(mysql_global_status_table_locks_immediate{instance="$host"}[5m])
+- index: 17
+  query: irate(mysql_global_status_table_locks_waited{instance="$host"}[5m])
+- index: 18
+  query: irate(mysql_global_status_bytes_received{instance="$host"}[5m])
+- index: 19
+  query: irate(mysql_global_status_bytes_sent{instance="$host"}[5m])
+- index: 20
+  query: irate(mysql_global_status_handlers_total{instance="$host", handler!~"commit|rollback|savepoint.*|prepare"}[5m])
+- index: 21
+  query: irate(mysql_global_status_qcache_not_cached{instance="$host"}[5m])
+- index: 22
+  query: irate(mysql_global_status_opened_files{instance="$host"}[5m])
+- index: 23
+  query: irate(mysql_global_status_table_open_cache_hits{instance="$host"}[5m])
+- index: 24
+  query: irate(mysql_global_status_table_open_cache_misses{instance="$host"}[5m])
+- index: 25
+  query: irate(mysql_global_status_table_open_cache_overflows{instance="$host"}[5m])
+
+
+
+
+icmp:
+- index: 0
+  query: probe_icmp_duration_seconds{target=~"$pod"}
+- index: 1
+  query: avg_over_time(probe_success[5m])
+- index: 2
+  query: probe_dns_lookup_time_seconds{target='frontend-http'}
+- index: 3
+  query: probe_dns_lookup_time_seconds{target='frontend-tcp'}
+- index: 4
+  query: (smokeping_requests_total{host="$target"}- smokeping_response_duration_seconds_count{host="$target"})/ smokeping_requests_total{host="$target"}
+
+time:
+- index: 0
+  query: sum(irate(node_time_seconds[5m]))
+- index: 1
+  query: sum(irate(node_timex_offset_seconds[5m]))
+- index: 2
+  query: sum(irate(node_timex_maxerror_seconds[5m]))
+
+jvm:
+- index: 0
+  query: rate(jvm_gc_collection_seconds_count{gc="G1 Old Generation"}[5m])
+- index: 1
+  query: rate(jvm_gc_collection_seconds_sum{gc="G1 Old Generation"}[5m])
+- index: 2
+  query: rate(jvm_buffer_pool_capacity_bytes{pool='direct'}[5m])
+- index: 3
+  query: rate(jvm_buffer_pool_used_bytes{pool='direct'}[5m])
+- index: 4
+  query: rate(jvm_buffer_pool_used_buffers{pool='direct'}[5m])
+- index: 5
+  query: rate(jvm_memory_bytes_used{area="heap"}[5m])
+- index: 6
+  query: rate(jvm_memory_bytes_used{area="nonheap"}[5m])
+
+http:
+- index: 0
+  query: probe_http_duration_seconds{phase='processing'}
+- index: 1
+  query: probe_http_duration_seconds{phase='resolve'}
